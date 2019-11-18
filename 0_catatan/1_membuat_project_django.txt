@@ -2,7 +2,9 @@
 
 pertama:
 buat folder baru dengan nama 'crud django'
--lalu membuat virtualenv, buka command lalu arahkan pada folder 'crud_django'
+-lalu kita install virtualenv, dengan perintah: pip install virtualenv
+-atau kunjungi cara install-nya: https://virtualenv.pypa.io/en/latest/installation/
+-jika sudah install virtualenv kita akan membuat virtualenv, buka command lalu arahkan pada folder 'crud_django'
 -dan gunakan printah berikut untuk membuat virtualenv: python -m venv Env
 -perintah diatas artinya kita ingin membuat sebuah vitualenv dengan nama folder-nya 'Env'
 -selesai kita berhasil membuat virtualenv.
@@ -43,3 +45,39 @@ membuat sebuah apps django
 -perintah diatas artinya kita ingin membuat app dengan nama crud
 -lalu kita akan memiliki sebuah folder baru dengan nama 'crud'
 -selamat kita sudah berhasil membuat sebuah app.
+
+keenam:
+menginstall app yang sudah kita buat pada project
+-pada file crudwithdjango/settings.py tambahkan app kita:
+*-- INSTALLED_APPS = [
+*--    'crud.apps.CrudConfig',
+*--    ...
+*-- ]
+-setelah itu kita akan membuat view index pada app terlebih dahulu, views.index:
+*-- from django.http import HttpResponse
+*-- # membuat view index
+*-- def index():
+*--     return HttpResponse("hallo saya index dari apps crud.")
+-lalu pada folder app kita menambahkan file crud/urls.py:
+*-- from django.urls import path
+*-- 
+*-- from . import views
+*-- 
+*-- urlpatterns = [
+*--     path('', views.index, name='index'),
+*-- ]
+-pada file crud/urls.py ta menginisialisasikan sebuah urlpatterns yang view-nya adalah diambil dari views.index
+-jika sudah maka kita akan daftarkan urls di app kita pada crudwithdjango/urls.py:
+*-- from django.contrib import admin
+*-- from django.urls import include, path
+*-- 
+*-- urlpatterns = [
+*--     path('crud/', include(crud.urls)),
+*--     path('admin/', admin.site.urls),
+*-- ]
+-lalu jalankan apps dengan jalankan server: python manage.py runserver
+-dan arahkan url ke app: 127.0.0.1:8000/crud/
+-selamat kita sudah berhasil membuat sebuah app didalam project kita.
+
+
+NOTE: selanjutnya kita akan setting database.

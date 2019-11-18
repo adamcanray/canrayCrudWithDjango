@@ -1,0 +1,55 @@
+11-Nov-2019:Muhammad Adam Canrayneldy.
+
+pertama:
+install mysql untuk database server
+-ada banyak opsi, silahkan pilih sesuai keinginan:
+*- install mysql langsung, disini: https://dev.mysql.com/downloads/installer/
+*- install Control Panel seperti Xampp, Lampp, Mamp dan lainnya yang serupa.
+-lakukan penginstallan mysql hingga berhasil
+-karena kita akan menggunakan MySQL server untuk membangun database.
+-jalankanlah MySQL server.
+
+kedua:
+install mysqlclient pada pip
+-ada banyak opsi, silahkan pilih sesuai keinginan:
+*- install menggunkan pip:
+***-- pip install mysqlclient
+*- install menggunakan file packages(.whl):
+***- pastikan python sudah terinstall pip terbaru
+***- lalu install wheel karena format file .whl, install wheel: pip install wheel
+***- download packages-nya dalam bentuk file .whl pada site ini: https://www.lfd.uci.edu/~gohlke/pythonlibs/#mysqlclient
+*****- atau site lain yang serupa, pastikan memilih file yang sesuai dengan python yang kita install.
+*****- contoh: kita memiliki python 3.7.0 32bit(bukan 64bit), maka kita download yang -- mysqlclient-1.4.5-cp37-cp37m-win32.whl
+*****- mysqlclient-1.4.5-cp37-cp37m-win32.whl
+*****- Penjelasan:
+*****- * mysqlclient -- adalah nama dari packages-nya
+*****- * -1.4.5 -- adalah version dari packages-nya
+*****- * -cp37 dan -cp37m -- adalah versi python yang kompatibel dengan packages ini(Python 3.7.0)
+*****- * -win32 -- adalah versi bit dari Python(hanya suport pada python 3.7.0 32bit)
+*****- * .whl adalah wheel jadi kita bisa install package ini ketika kita memiliki wheel pada pip list, dan juga pip versi terbaru.
+***- setelah selesai mendownload kita perlu install menggunakan pip.
+***- bukan command lalu arahkan pada file .whl yang kita download tadi
+***- lalu ketikan perintah: pip install mysqlclient-1.4.5-cp37-cp37m-win32.whl
+***- jika berhasil maka akan successful.
+
+ketiga:
+setting database pada crudwithdjango/settings.py
+Documentation: https://docs.djangoproject.com/en/2.2/ref/settings/#databases
+- pertama buka file settings.py nya pada code editor
+- lalu set distionary DATABASES seperti ini(awalnya connect ke sqlite3):
+***- DATABASES = {
+***-     'default': {
+***-         'ENGINE': 'django.db.backends.mysql', # ini akan meng-connect-kan kita pada database mysql(maka dari itu kita perlu packages mysqlclient)
+***-         'NAME': 'crud_with_django', # ini adalah nama dari database yang ingin kita gunakan
+***-         'USER': 'root', # ini adalah user untuk validasi ke server MySQL
+***-         'PASSWORD': '', # ini adalah password untuk validasi ke server MySQL
+***-         'HOST': 'localhost', # ini adalah host yang digunakan untuk akses database
+***-         'PORT': '3306', # ini adalah portyang digunakan
+***-     }
+***- }
+- jika sudah, buka command lalu jalankan manage.py: python manage.py mirgate
+- jika berhasil maka kita akan dibuatkan tabel-tabel pada database
+- tabel-tabel tersebut dibutuhkan django untuk halaman admin dan lain-lain.
+
+
+NOTE: selanjutnya kita akan membuat model dan migrasi.
