@@ -2,6 +2,13 @@
 Python Version: **3.7.0** </br>
 Django Version: **2.2.7** </br>
 
+Prerequisite:
+* Install Python: [install python](https://www.python.org/downloads/)
+* Install vitualenv: [install virtualenv](https://virtualenv.pypa.io/en/latest/installation/)
+* Install Django: ```pip install django```
+* Install MySQL: [install MySQL](https://dev.mysql.com/doc/mysql-installation-excerpt/5.5/en/) or [install XAMPP](https://www.apachefriends.org/download.html)
+
+
 Structure Files:
 * **Env/** </br>
 folder **Env** ini harus ada sebagai virtualenv. saya tidak meng-upload nya pada repo ini karena size yang lumayan hingga 109 MB(tergantung packages apa saja yang sudah terinstall). saya bisa membuat virtualenv dengan command berikut: ```python -m venv Env``` -- artinya kita ingin membuat sebuah virtualenv dengan nama folder-nya Env. pastikan virtual Env berada pada main folder(bisa ikuti langkah pada **0_catatan/1_membuat_project_django.txt**).
