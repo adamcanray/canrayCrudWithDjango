@@ -2,14 +2,14 @@
 Python Version: **3.7.0** </br>
 Django Version: **2.2.7** </br>
 
-Prerequisite:
+### Prerequisite:
 * Install Python: [install python](https://www.python.org/downloads/)
 * Install vitualenv: [install virtualenv](https://virtualenv.pypa.io/en/latest/installation/)
 * Install Django: ```pip install django```
 * Install MySQL: [install MySQL](https://dev.mysql.com/doc/mysql-installation-excerpt/5.5/en/) or [install XAMPP](https://www.apachefriends.org/download.html)
 
 
-Structure Files:
+### Structure Files:
 * **Env/** </br>
 folder **Env** ini harus ada sebagai virtualenv. saya tidak meng-upload nya pada repo ini karena size yang lumayan hingga 109 MB(tergantung packages apa saja yang sudah terinstall). saya bisa membuat virtualenv dengan command berikut: ```python -m venv Env``` -- artinya kita ingin membuat sebuah virtualenv dengan nama folder-nya Env. pastikan virtual Env berada pada main folder(bisa ikuti langkah pada **0_catatan/1_membuat_project_django.txt**).
 * **0_catatan/**
@@ -33,3 +33,11 @@ folder **Env** ini harus ada sebagai virtualenv. saya tidak meng-upload nya pada
     adalah folder project yang saya buat. untuk penjelasan detail mengenai fungsi dari file-file di dalam folder ini kamu bisa kunjungi repo ini [canrayLearnDjango](https:/github.com/adamcanray/canrayLearnDjango)
   * db.sqlite3 -- adalah file **database sqlite3** yang otomatis sudah terbuatketika kit amembuat project di django.
   * manage.py -- adalah file kunci yang untuk menjalankan testing, runserver dan semua yang kontrol pada project ada di file ini. contoh penggunaan: ```python manage.py runserver```
+  
+### Demo Aplication:
+
+Index page
+![index](captures/indexView.JPG)
+
+Edit page
+![edit](captures/editView.JPG)
