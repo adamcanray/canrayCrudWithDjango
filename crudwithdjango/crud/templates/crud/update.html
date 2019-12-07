@@ -10,8 +10,7 @@
             <h3 class="mb-3">Edit User</h3>
             {% if users %}
                 {% for user in users %}
-                <form action="{% url 'crud:updateuser' user.id %}" method="post">
-                    {% csrf_token %}
+                <form action="{% url 'crud:updateuser' user.id %}" method="post">{% csrf_token %}
                     <div class="form-group">
                         <input class="form-control" type="text" name="username" placeholder="Username" value="{{ user.username }}">
                     </div>

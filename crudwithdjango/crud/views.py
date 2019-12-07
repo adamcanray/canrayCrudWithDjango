@@ -26,7 +26,7 @@ def addUser(request):
         return HttpResponseRedirect(reverse('crud:index'))
     else:
         # insert ke database
-        new_user = User.objects.create(username=request.POST['username'], first_name=request.POST['first_name'], last_name=request.POST['last_name'])
+        new_user = User.objects.create(username=request.POST['username'].lower(), first_name=request.POST['first_name'].title(), last_name=request.POST['last_name'].title())
         # execute
         new_user.save()
         # redirect ke halaman index
@@ -53,6 +53,6 @@ class UpdateView(generic.DetailView):
 # 
 def updateUser(request, user_id):
     # update data
-    User.objects.filter(id=user_id).update(username=request.POST['username'], first_name=request.POST['first_name'], last_name=request.POST['last_name'])
+    User.objects.filter(id=user_id).update(username=request.POST['username'].lower(), first_name=request.POST['first_name'].title(), last_name=request.POST['last_name'].title())
     # 
     return HttpResponseRedirect(reverse('crud:index'))
