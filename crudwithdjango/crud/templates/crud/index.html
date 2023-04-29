@@ -1,0 +1,59 @@
+{% load static %}
+<!-- bootstrap -->
+<link rel="stylesheet" href="{% static 'assets/bootstrap.min.css' %}">
+
+<!-- body -->
+<div class="container">
+    <!-- form -->
+    <div class="row mt-3">
+        <div class="col-md-4">
+            <h2>Tambah User</h2>
+            <form action="{% url 'crud:adduser' %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input class="form-control" type="text" name="username" placeholder="Username">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" name="first_name" placeholder="First name">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" name="last_name" placeholder="Last name">
+                </div>
+                <button type="submit" name="btn_add" class="btn btn-primary">Add</button>
+            </form>
+        </div>
+        <!-- table -->
+        <div class="col-md-8 text-center">
+            <h2 class="mb-3">Daftar User</h2>
+            {% if users %}
+            <table class="table">
+                <tr>
+                    <th>No.</th>
+                    <th>Username</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Action</th>
+                </tr>
+                <script>
+                    let no = 1;
+                </script>
+                {% for user in users %}
+                <tr>
+                    <td><script>document.write(no);</script></td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.first_name }}</td>
+                    <td>{{ user.last_name }}</td>
+                    <td>
+                        <a href="{% url 'crud:deleteuser' user.id %}">Hapus</a>
+                        <a href="{% url 'crud:updateview' user.id %}">edit</a>
+                    </td>
+                </tr>
+                <script>
+                    no++;
+                </script>
+                {% endfor %}
+                </table>
+            {% endif %}
+        </div>
+    </div>
+</div>

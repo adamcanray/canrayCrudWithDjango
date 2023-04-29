@@ -1,0 +1,71 @@
+18-Nov-2019:Muhammad Adam Canrayneldy.
+
+pertama:
+membuat model, crud/models.py
+-pertama buka models.py
+-lalu pada project ini saya akan membuat sebuah model dengan nama user
+-jadi saya bisa seperti ini, pada models.py:
+*- from django.db import models  # import django.db.models
+*- 
+*- class User(models.Model):  # instansiasi class User sebagai Model -- pada database ini akan menjadi nama table 'crud_user' <- namaApp_namaModel
+*-     # otomatis dibuatkan field 'id' (int) sebagai 'primary_key' dan 'auto_increment'
+*-     username = models.CharField(max_length=10)  # kita akan dibuatkan field 'username' varchar(10) pada tabel
+*-     first_name = models.CharField(max_length=30)  # kita akan dibuatkan field 'first_name' varchar(30) pada tabel
+*-     last_name = models.CharField(max_length=30)  # kita akan dibuatkan field 'last_name' varchar(30) pada tabel
+*-     
+*-     def __str__(self):  # denga ini artinya kita ingin membuat function/method yang me-return string
+*-         return self.username # dengan method ini artinya model ini akan me-return/menampilkan username
+-maka model sudah berhasil kita buat, selanjutnya kita akan makemigration.
+
+kedua:
+menjalankan makemigration
+dengan menjalankan makemigration artinya kita ingin model kita terdaftar agar bisa kita migrate.
+-pertama kita buka command lalu arahkan ke folder project
+-jalankan manage.py make migration, dengan: python manage.py makemigration
+-tunggu hingga selesai, kita akan memerintahkan django untuk membuat sebuah tabel 'namaApp_namaModel' pada database, beserta field-fieldnya.
+-jika sudah aka kita sudah berhasil membuat model kita.
+-langkah selanjutnya adalah melakukan migrasi(migrate).
+
+ketiga:
+menjalankan migrate untuk migrasi model menjadi table,
+dengan begini maka model kita sudah memiliki akses penuh ke tabel di database.
+-pertama buka command lalu arahkan pada folder project
+-setelah itu jalankan manage.py, dengan: python manage.py migrate
+-maka model kita akan dibuatkan tabel berserta field-fieldnya.
+-note: jika menambahkan field baru kita harus melakukan makemigration lagi lalu migrate.
+
+keempat:
+django menyediakan sebuah halaman untuk admin,
+dimana kita dapat mengatur model kita(CRUD),
+dengan hanya mendaftarkannya.
+tetapi ini optional(jika diperlukan maka gunakan). 
+pada kasus ini saya membuat sebuah Website yang bisa melakukan operasi CRUD,
+tetapi saya tetap mendaftarkan model User ke halaman admin.
+-pertama kita buka file admin.py pada folder app(crud/admin.py)
+-selanjutnya kita akan mendaftarkan model kita 'User'
+*- from django.contrib import admin  # import django.contrib.admin
+*- from crud.models import User  # import model milik kita
+*- admin.site.register(User)  # daftarkan model milik kita
+-ketika kita login ke halaman admin maka model yang kita daftarkan akan muncuk dan dapat dimanipulasi(CRUD).
+
+kelima:
+membuat superuser 
+ini digunakan untuk login pada halaman admin.
+-pertama kita buka command lalu jalankan manage.py
+-dengan mengetik: python manage.py createsuperuser
+-lalu masukan username, email, dan password kita
+-karena untuk belajar saja, kita hanya akna memasukan admin, admin@example.com, admin.
+-kita sudah berhasil membuat superuser
+-note: jika kita membuat project sesungguhnya, pastikan lah password yang kita daftarkan itu sulit untuk diketahui.
+
+keenam:
+kita masuk halaman admin lalu silahkan cobe-coba memanipulasi model kita sendiri
+-pertama kita bisa jalankan server django, dengan: python manage.py runserver
+-default: 127.0.0.1:8000/
+-lalu kita buka ini pada browser: 127.0.0.1:8000/admin
+-maka kita akan ditampilkan halaman login untuk admin
+-masukanlah username dan password superuser yang sebelumnya kita buat.
+-sekarang kita sudah bisa akses halaman admin.
+
+
+NOTE: selanjutnya kita akan setting urls dan membuat views.

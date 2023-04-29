@@ -1,0 +1,73 @@
+setting urls.py --- untuk ketika user masuk ke url tersebut views apa yang kita berikan.
+
+pertama:
+setting urls
+-pertama kita buka file crud/urls.py
+-pada kasus ini saya men-setting urls seperti ini:
+*- from django.urls import path  # import django.urls.path
+*- from . import views  # import views.py kita (masih pada folder yang sama)
+*- 
+*- app_name = 'crud'  # buat namespace(app_name) kita ketika template ingin menujuurl tertentu bisa menulis {% url 'crud:index' %} <- 'namespace:namePath'
+*- 
+*- urlpatterns = [ # urlpatterns -- berisi path(urls), setiap satu path() mewakili satu url yang bisa diakses oleh user
+*-     path('', views.IndexView.as_view(), name='index'),
+*-     path('adduser/', views.addUser, name='adduser'),
+*-     path('<int:user_id>/delete/', views.deleteUser, name='deleteuser'),
+*-     path('<int:pk>/update/', views.UpdateView.as_view(), name='updateview'),
+*-     path('<int:user_id>/updateproccess/', views.updateUser, name='updateuser'),
+*- ]
+-url diatas contoh: urls untuk index dengan name 'index' parameter ketiga. 
+*---parameter pertama '' artinya ini ketika url menuju app inilah yang ditampilkan, 
+*---parameter kedua adalah views yang digunakan pada ulrs ini.
+-setiap path urls akan memiliki views-nya untuk memproses permintaan terhadap model.
+-selanjutnya kita akan membuat views untuk tiap-tiap path url diatas.
+
+kedua:
+membuat views
+untuk mengambil data dari model jika ada, lalu menampilkannya sebagai respons 
+atau tampilan template ketika url dikunjungi.
+-pertama kita buka file crud/views.py
+-selanjutnya kita membuat views berikut:
+*- from django.http import HttpResponseRedirect
+*- from django.views import generic
+*- from crud.models import User
+*- from django.urls import reverse
+*- from django.shortcuts import get_object_or_404, render
+*- 
+*- class IndexView(generic.ListView):
+*-     template_name = "crud/index.html"    
+*-     context_object_name = 'users'
+*-     def get_queryset(self):
+*-         return User.objects.all()
+*- 
+*- def addUser(request):
+*-     if len(request.POST['username']) == 0 or len(request.POST['first_name']) == 0 or len(request.POST['last_name']) == 0 :
+*-         users = User.objects.all()
+*-         return HttpResponseRedirect(reverse('crud:index'))
+*-     else:
+*-         new_user = User.objects.create(username=request.POST['username'], first_name=request.POST['first_name'], last_name=request.POST['last_name'])
+*-         new_user.save()
+*-         return HttpResponseRedirect(reverse('crud:index'))
+*- 
+*- def deleteUser(request, user_id):
+*-     user_delete = User.objects.get(id=user_id)
+*-     user_delete.delete()
+*-     return HttpResponseRedirect(reverse('crud:index'))
+*-  
+*- class UpdateView(generic.DetailView):
+*-     model = User 
+*-     template_name = "crud/update.html"     
+*-     def get_context_data(self, **kwargs):
+*-         context = super(UpdateView, self).get_context_data(**kwargs)
+*-         context['users'] = User.objects.filter(pk=self.kwargs['pk'])
+*-         return context
+*- 
+*- def updateUser(request, user_id):
+*-     User.objects.filter(id=user_id).update(username=request.POST['username'], first_name=request.POST['first_name'], last_name=request.POST['last_name'])
+*-     return HttpResponseRedirect(reverse('crud:index'))
+-perhatikan pada setiap urls yang dibuat pasti harus ada class atau method views nya disini.
+-views diatas sebagian menggunakan generic views bawaan django, Documetation: https://docs.djangoproject.com/en/2.2/ref/class-based-views/generic-editing/
+-Note: views diatas menggunakan generic views dan sudah memiliki template nya masing-masing(kita akan buat).
+
+
+NOTE: selanjutnya kita akan membuat template.

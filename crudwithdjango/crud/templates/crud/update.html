@@ -1,0 +1,30 @@
+{% load static %}
+<!-- bootstrap -->
+<link rel="stylesheet" href="{% static 'assets/bootstrap.min.css' %}">
+
+<!-- body -->
+<div class="container">
+    <!-- form -->
+    <div class="row justify-content-center mt-3">
+        <div class="col-md-6">
+            <h3 class="mb-3">Edit User</h3>
+            {% if users %}
+                {% for user in users %}
+                <form action="{% url 'crud:updateuser' user.id %}" method="post">{% csrf_token %}
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="username" placeholder="Username" value="{{ user.username }}">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="first_name" placeholder="First name" value="{{ user.first_name }}">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="last_name" placeholder="Last name" value="{{ user.last_name }}">
+                    </div>
+                    <button type="submit" name="btn_edit" class="btn btn-primary">Update</button>
+                </form>
+                {% endfor %}
+            {% endif %}
+            <a href="{% url 'crud:index' %}">back to home.</a>
+        </div>
+    </div>
+</div>

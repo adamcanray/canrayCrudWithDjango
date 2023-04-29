@@ -1,0 +1,83 @@
+11-Nov-2019:Muhammad Adam Canrayneldy.
+
+pertama:
+buat folder baru dengan nama 'crud django'
+-lalu kita install virtualenv, dengan perintah: pip install virtualenv
+-atau kunjungi cara install-nya: https://virtualenv.pypa.io/en/latest/installation/
+-jika sudah install virtualenv kita akan membuat virtualenv, buka command lalu arahkan pada folder 'crud_django'
+-dan gunakan printah berikut untuk membuat virtualenv: python -m venv Env
+-perintah diatas artinya kita ingin membuat sebuah vitualenv dengan nama folder-nya 'Env'
+-selesai kita berhasil membuat virtualenv.
+
+kedua:
+install django
+-pada command arahkan ke folder 'crud_django'
+-lalu ketika perintah berikut: Env\Scripts\activate.bat
+-untuk mengaktivkan virtualenv(kita bisa menonaktifkannya lagi dengan: deactivate)
+-jika sudah mungkin command kamu sekarangn sudah berada di dalam virtualenv: (Env) C:\Dev\crud_django>
+-jalankan perintah ini untuk upgrade pip: python -m pip install --upgrade pip
+-jika sudah maka kita install django dengan mengetikan ini pada virtualenv kita: pip install django
+-maka otomatis meng-install django versi terbaru(saat ini 2.2.7).
+-pastikan django sudah terinstall dengan: pip list
+
+ketiga:
+membuat project
+-keluar dari virtualenv: deactivate
+-pada command ketikan: django-admin startproject crudwithdjango
+-perintah diatas adalah kita ingin membuat project dengan nama crudwithdjango
+-arahkan command ke project kita: C:\Dev\crud_django\crudwithdjango
+-di dalam folder 'crudwithdjango' kita mempunyai folder project dengan nama 'crudwithdjango' dan file 'manage.py'
+-kita sudah berhasil membuat project.
+
+keempat:
+test project yang sudah dibuat
+-jalankan manage.py pada: C:\Dev\crud_django\crudwithdjango\manage.py
+-arahkan ke folder crudwithdjango dan mengetikan pada command: python manage.py runserver
+-artinya kita ingin menjalankan webserver-nay django
+-nanti kita akan diberi url defaultnya: 127.0.0.1:8000
+-buka lah url tersebut dengan browser
+-jika berhasil maka alamat itu akan memunculkan tampilkan default-nya django.
+-selamat project yang kita buat sudah berjalan.
+
+kelima:
+membuat sebuah apps django
+-jalankan pada command(seperti membuat project): django-admin startapp crud
+-perintah diatas artinya kita ingin membuat app dengan nama crud
+-lalu kita akan memiliki sebuah folder baru dengan nama 'crud'
+-selamat kita sudah berhasil membuat sebuah app.
+
+keenam:
+menginstall app yang sudah kita buat pada project
+-pada file crudwithdjango/settings.py tambahkan app kita:
+*-- INSTALLED_APPS = [
+*--    'crud.apps.CrudConfig',
+*--    ...
+*-- ]
+-setelah itu kita akan membuat view index pada app terlebih dahulu, views.index:
+*-- from django.http import HttpResponse
+*-- # membuat view index
+*-- def index():
+*--     return HttpResponse("hallo saya index dari apps crud.")
+-lalu pada folder app kita menambahkan file crud/urls.py:
+*-- from django.urls import path
+*-- 
+*-- from . import views
+*-- 
+*-- urlpatterns = [
+*--     path('', views.index, name='index'),
+*-- ]
+-pada file crud/urls.py ta menginisialisasikan sebuah urlpatterns yang view-nya adalah diambil dari views.index
+-jika sudah maka kita akan daftarkan urls di app kita pada crudwithdjango/urls.py:
+*-- from django.contrib import admin
+*-- from django.urls import include, path
+*-- 
+*-- urlpatterns = [
+*--     path('crud/', include(crud.urls)),
+*--     path('admin/', admin.site.urls),
+*-- ]
+-lalu jalankan apps dengan jalankan server: python manage.py runserver
+-dan arahkan url ke app: 127.0.0.1:8000/crud/
+-selamat kita sudah berhasil membuat sebuah app didalam project kita.
+
+
+NOTE: selanjutnya kita akan setting database.

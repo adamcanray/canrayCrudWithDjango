@@ -1,0 +1,117 @@
+-template --- tampilan website standar dengan HTML.
+buat template --- 
+
+pertama:
+membuat template
+pada django kita bisa menampilkan sebuah tampilan HTML yang memiliki INTERFACE dan RESPONSIVE.
+dengan menggunakan template, cara kerja: urls->views-->template
+                                                    \->models
+jadi ketika user menuju suatu urls pada app, maka yang terjadi adalah seperti cara kerjakema diatas.
+-pertama kita membuat sebuah folder dengan nama 'templates' di dalam folder App kita(crud),
+*---karena django akan otomatis mengenali jika kita membuat folder dengna nama 'templates' pada app.
+-jika sudah kita bisa langsung membuah file index.html disana(karena ViewIndex menggunakan index.html sebagai template).
+-tetapi kita tidak akan melakukan itu, kita akan menggunakan cara berikutnya,
+-yaitu dengan membuat dulu folder dengan nama yang sama dengan folder app(contoh: crud).
+-lalu baru kita membuat file index.html pada folder tersebut (crudwithdjango/crud/templates/crud/index.html).
+-isi index.html:
+*- <!-- bootstrap -->
+*- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+*- 
+*- <div class="container">
+*-     <div class="row mt-3">
+*-         <div class="col-md-4">
+*-             <h2>Tambah User</h2>
+*-             <form action="{% url 'crud:adduser' %}" method="post">
+*-                 {% csrf_token %}
+*-                 <div class="form-group">
+*-                     <input class="form-control" type="text" name="username" placeholder="Username">
+*-                 </div>
+*-                 <div class="form-group">
+*-                     <input class="form-control" type="text" name="first_name" placeholder="First name">
+*-                 </div>
+*-                 <div class="form-group">
+*-                     <input class="form-control" type="text" name="last_name" placeholder="Last name">
+*-                 </div>
+*-                 <button type="submit" name="btn_add" class="btn btn-primary">Add</button>
+*-             </form>
+*-         </div>
+*-         <!-- table -->
+*-         <div class="col-md-8 text-center">
+*-             <h2 class="mb-3">Daftar User</h2>
+*-             {% if users %}
+*-             <table class="table">
+*-                 <tr>
+*-                     <th>No.</th>
+*-                     <th>Username</th>
+*-                     <th>First Name</th>
+*-                     <th>Last Name</th>
+*-                     <th>Action</th>
+*-                 </tr>
+*-                 <script>
+*-                     let no = 1;
+*-                 </script>
+*-                 {% for user in users %}
+*-                 <tr>
+*-                     <td><script>document.write(no);</script></td>
+*-                     <td>{{ user.username }}</td>
+*-                     <td>{{ user.first_name }}</td>
+*-                     <td>{{ user.last_name }}</td>
+*-                     <td>
+*-                         <a href="{% url 'crud:deleteuser' user.id %}">Hapus</a>
+*-                         <a href="{% url 'crud:updateview' user.id %}">edit</a>
+*-                     </td>
+*-                 </tr>
+*-                 <script>
+*-                     no++;
+*-                 </script>
+*-                 {% endfor %}
+*-                 </table>
+*-             {% endif %}
+*-         </div>
+*-     </div>
+*- </div>
+-lalu kita juga membuat update.html:
+*- <!-- bootrstrap -->
+*- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+*- 
+*- <div class="container">
+*-     <div class="row justify-content-center mt-3">
+*-        <div class="col-md-6">
+*-            <h3 class="mb-3">Edit User</h3>
+*-            {% if users %}
+*-                {% for user in users %}
+*-                <form action="{% url 'crud:updateuser' user.id %}" method="post">
+*-                    {% csrf_token %}
+*-                    <div class="form-group">
+*-                        <input class="form-control" type="text" name="username" placeholder="Username" value="{{ user.username }}">
+*-                    </div>
+*-                    <div class="form-group">
+*-                        <input class="form-control" type="text" name="first_name" placeholder="First name" value="{{ user.first_name }}">
+*-                    </div>
+*-                    <div class="form-group">
+*-                        <input class="form-control" type="text" name="last_name" placeholder="Last name" value="{{ user.last_name }}">
+*-                    </div>
+*-                    <button type="submit" name="btn_edit" class="btn btn-primary">Update</button>
+*-                </form>
+*-                {% endfor %}
+*-            {% endif %}
+*-            <a href="{% url 'crud:index' %}">back to home.</a>
+*-         </div>
+*-    </div>
+*- </div>
+-untuk template index.html dan update.html saya menggunakan bootstrap sebagai CSS nya.
+-sekarang runserver lagi lalu buka url 127.0.0.1:8000/crud
+-url yang digunakan dengan name='index' maka yang tampil sekarang adalah template index.html yang mengambil data langsung
+*---- dari database ke Model melalui Views.
+-selamat kita berhasil membuat crud sederhana menggunakan Django.
+
+
+NOTE: mengapa pada templates pada kasus ini saya membuat folder dengan nama yang sama dengan app terlebih dahulu?
+      jawaban:
+      pada templates sebetulnya kita bisa langsung membuat index.html(templates/index.html).
+      tetapi itu akan bertabrakan ketika kita memiliki lebih dari 1 App.
+      contoh: kita memiliki App dengan nama crud dan polls.
+      dan ketika di load maka akan sama templates index crud dengan polls.
+      maka dari itu dengan dibuatnya folder nama yang sama dengan app itu akan memberitahu django bahwa templates tertentu itu milik app tertentu.
+      milik App crud: crudwithdjango/crud/templates/crud/index.html
+      milik App polls: crudwithdjango/polls/templates/polls/index.html
